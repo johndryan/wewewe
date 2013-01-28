@@ -7,6 +7,7 @@ import time
 from datetime import datetime
 from flask import Response
 from flask import request
+from real_ip_address import ProxiedRequest
 
 app = Flask(__name__)
 
@@ -50,4 +51,5 @@ if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
     app.debug = True
+    app.request_class = ProxiedRequest
     app.run(host='0.0.0.0', port=port)
