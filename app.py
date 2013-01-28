@@ -1,7 +1,8 @@
 import os
 from flask import Flask
-from redis import Redis
-redis = Redis()
+import redis
+redis_url = os.getenv('REDISTOGO_URL', 'redis://localhost:6379')
+redis = redis.from_url(redis_url)
 import time
 from datetime import datetime
 from flask import Response
