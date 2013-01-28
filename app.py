@@ -44,7 +44,7 @@ def mark_current_user_online():
 
 @app.route('/')
 def index():
-    return Response('Online: %s' % ', '.join(get_online_users()),
+    return Response('Online: %s \n\n\n\n %s' % (', '.join(get_online_users()),'->'.join(request.access_route)),
                     mimetype='text/plain')
 
 if __name__ == '__main__':
