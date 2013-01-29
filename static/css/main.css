@@ -1,0 +1,40 @@
+/* ==========================================================================
+   @johndryan's custom styles
+   ========================================================================== */
+
+body {
+   padding-top: 60px;
+   padding-bottom: 40px;
+}
+   
+h1,
+.centered {
+   text-align: center;
+}
+
+.progress {
+	margin: 5em 0;
+}
+
+h1 {
+	height: 4em;
+	text-indent: -999em;
+	overflow: hidden;
+	background: url(../img/locked.png) no-repeat 50% 50%;
+}
+
+h1.unlocked {
+	background: url(../img/unlocked.png) no-repeat 50% 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+

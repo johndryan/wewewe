@@ -1,11 +1,69 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>wewewe.johndryan.me</title>
-</head>
-<body>
-    <div id="content">
-		<pre><code>{{ data }}</code></pre>
-	</div>
-</body>
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>An Experiment in Collaborative Web Browsing</title>
+        <meta name="description" content="This website only grants access when a critical mass are viewing it concurrently, from the same location (shared IP address or geolocation). The individual act of interacting with a site in a browser is made collective (and social) by requiring the recruitment of others to access the site simultaneously.">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="static/css/main.css">
+
+        <script src="static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+
+	    <div class="container">
+			<div class="span6 offset3">
+				
+				<h1 class="{{ state }}">Site {{ state }}</h1>
+				
+				<div class="progress{% if percent == '100' %} progress-striped active{% endif %}">
+				  <div class="bar" style="width: {{ percent }}%;"></div>
+				</div>
+				
+				<!-- Button to trigger modal -->
+				<p class="centered"><a href="#myModal" role="button" class="btn btn-small" data-toggle="modal"><i class="icon-info-sign"></i> More info</a></p>
+ 
+				<!-- Modal -->
+				<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+						<h3 id="myModalLabel">
+							Collaborative Browsing Experiment
+						</h3>
+					</div>
+					<div class="modal-body">
+						<p>This website only grants access when a critical mass are viewing it concurrently, from the same location (shared IP address). The individual act of interacting with a site in a browser is made collective (and social) by requiring the recruitment of others to access the site simultaneously.</p>
+
+						<div class="alert{% if percent == '100' %} alert-success{% endif %}">
+							<strong>Status: {{ state }}.</strong> <span>{{ num_users }}</span> visitors from your location. Total of {{ critical_mass }} required.
+						</div>
+						
+						<p>This site is a part if a series of investigations and experiments I'm undertaking as part of my <a href="http://github.com/johndryan/thesis#readme" title="Read the current draft of my Thesis Paper">thesis</a>. For more information, please visit my <a href="http://blog.johndryan.me/tagged/thesis" title="Posts tagged #thesis on my blog">thesis blog</a>.</p>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<small class="muted pull-left">Created by <a href="http://johndryan.me/">John Ryan</a></small>
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+					</div>
+				</div>
+			</div>
+	    </div> <!-- /container -->
+
+		<!-- JAVASCRIPT -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="static/js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="static/js/vendor/bootstrap.min.js"></script>
+        <script src="static/js/main.js"></script>
+
+        <script>
+            var _gaq=[['_setAccount','UA-307980-38'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

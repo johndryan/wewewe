@@ -14,11 +14,10 @@ from flask import make_response
 from flask import render_template
 from real_ip_address import ProxiedRequest
 
-global new_user
-
 app = Flask(__name__)
 
 ONLINE_LAST_MINUTES = 1
+NUM_USERS_REQUIRED = 5
 
 def mark_online(user_ip, cookie_id):
     now = int(time.time())
@@ -32,6 +31,7 @@ def mark_online(user_ip, cookie_id):
     p.set(user_key, now)
     p.expireat(all_users_key, expires)
     p.expireat(user_key, expires)
+    p.expireat(ip_users_key, expires)
     p.execute()
 
 def get_user_last_activity(user_ip):
@@ -66,8 +66,16 @@ def index():
     if cookie is None:
         return redirect('/add')
     else:
-        data = 'Num of IPs: %s \n\nNum users from this IP: %s' % (len(get_online_users()), len(get_ip_users( request.remote_addr )))
-        return render_template('index.html', data=data)
+        critical_mass = NUM_USERS_REQUIRED;
+        num_users = len(get_ip_users( request.remote_addr ))
+        # What percentage of users present? Max is 100%
+        percent = min(100 * len(get_ip_users( request.remote_addr ))/critical_mass,100)
+        # if there's enough users, display. Else don't
+        if len(get_ip_users( request.remote_addr )) >= NUM_USERS_REQUIRED:
+            state = "unlocked"
+        else:
+            state = "locked"
+        return render_template('index.html', **locals())
 
 @app.route('/add')
 def cookie_insertion():
@@ -79,10 +87,14 @@ def cookie_insertion():
     expires = datetime.now() + timedelta(days=30)
     response.set_cookie('existing_user', cookie, expires=expires)
     return response
+    
+@app.route('/critical_mass_reached')
+def critical_mass_reached():
+    num_users = len(get_ip_users( request.remote_addr ))
+    percent = min(100 * num_users/NUM_USERS_REQUIRED,100)
+    return Response("%s,%s" % (percent,num_users), mimetype='text/plain')
 
 if __name__ == '__main__':
-    # Assume the visitor isn't new, we'll check with a cookie above
-    new_user = False
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
     # App debugging on
