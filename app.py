@@ -17,7 +17,7 @@ from real_ip_address import ProxiedRequest
 app = Flask(__name__)
 
 ONLINE_LAST_MINUTES = 1
-NUM_USERS_REQUIRED = 2
+NUM_USERS_REQUIRED = 4
 
 def mark_online(user_ip, cookie_id):
     now = int(time.time())
